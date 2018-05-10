@@ -3,17 +3,20 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 // external
+<<<<<<< HEAD
 use cairo::{
     self,
     MatrixTrait,
     PatternTrait,
 };
+=======
+use cairo::{self, MatrixTrait, Pattern, PatternTrait};
+>>>>>>> 480c43e... fix: update for cairo-rs
 use usvg;
 use usvg::prelude::*;
 
 // self
 use super::prelude::*;
-
 
 pub fn apply(
     node: &usvg::Node,
@@ -63,7 +66,6 @@ pub fn apply(
     ts.translate(r.x, r.y);
     ts.scale(1.0 / sx, 1.0 / sy);
 
-
     let surface = if opacity.fuzzy_ne(&1.0) {
         // If `opacity` isn't `1` then we have to make image semitransparent.
         // The only way to do this is by making a new image and rendering
@@ -79,7 +81,6 @@ pub fn apply(
         surface
     };
 
-
     let patt = cairo::SurfacePattern::create(&surface);
     patt.set_extend(cairo::Extend::Repeat);
     patt.set_filter(cairo::Filter::Best);
@@ -88,5 +89,10 @@ pub fn apply(
     m.invert();
     patt.set_matrix(m);
 
+<<<<<<< HEAD
     cr.set_source(&cairo::Pattern::SurfacePattern(patt));
+=======
+    let mut patt = Pattern::SurfacePattern(patt);
+    cr.set_source(&mut patt);
+>>>>>>> 480c43e... fix: update for cairo-rs
 }

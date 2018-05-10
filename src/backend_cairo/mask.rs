@@ -3,16 +3,12 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 // external
-use cairo::{
-    self,
-    MatrixTrait,
-};
+use cairo::{self, MatrixTrait};
 use usvg;
 
 // self
 use super::prelude::*;
 use backend_utils::mask;
-
 
 pub fn apply(
     node: &usvg::Node,
@@ -47,13 +43,28 @@ pub fn apply(
     }
 
     {
+<<<<<<< HEAD
         let mut data = try_opt_warn!(mask_surface.get_data().ok(), (),
                                      "Failed to borrow a surface for mask: {:?}.", mask.id);
         mask::image_to_mask(&mut data, layers.image_size(), opacity);
+=======
+        let mut data = try_opt_warn!(
+            mask_surface.get_data().ok(),
+            (),
+            "Failed to borrow a surface for mask: {:?}.",
+            mask.id
+        );
+        utils::image_to_mask(&mut data, layers.image_size(), opacity);
+>>>>>>> 480c43e... fix: update for cairo-rs
     }
 
     let patt = cairo::SurfacePattern::create(&*mask_surface);
     cr.set_matrix(cairo::Matrix::identity());
+<<<<<<< HEAD
     cr.mask(&cairo::Pattern::SurfacePattern(patt));
+=======
+    let patt = cairo::Pattern::SurfacePattern(patt);
+    cr.mask(&patt);
+>>>>>>> 480c43e... fix: update for cairo-rs
     cr.reset_source_rgba();
 }

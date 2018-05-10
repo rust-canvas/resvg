@@ -3,15 +3,11 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 // external
-use cairo::{
-    self,
-    MatrixTrait,
-};
+use cairo::{self, MatrixTrait, Pattern};
 use usvg;
 
 // self
 use super::prelude::*;
-
 
 pub fn prepare_linear(
     g: &usvg::LinearGradient,
@@ -20,27 +16,32 @@ pub fn prepare_linear(
     cr: &cairo::Context,
 ) {
     let grad = cairo::LinearGradient::new(g.x1, g.y1, g.x2, g.y2);
-    prepare_base(&g.base, &grad, opacity, bbox);
-    cr.set_source(&cairo::Pattern::LinearGradient(grad));
+    prepare_base(node, &g.d, &grad, opacity, bbox);
+    let mut grad = Pattern::LinearGradient(grad);
+    cr.set_source(&mut grad);
 }
 
 pub fn prepare_radial(
     g: &usvg::RadialGradient,
     opacity: usvg::Opacity,
     bbox: Rect,
-    cr: &cairo::Context
+    cr: &cairo::Context,
 ) {
     let grad = cairo::RadialGradient::new(g.fx, g.fy, 0.0, g.cx, g.cy, g.r);
-    prepare_base(&g.base, &grad, opacity, bbox);
-    cr.set_source(&cairo::Pattern::RadialGradient(grad));
+    prepare_base(node, &g.d, &grad, opacity, bbox);
+    let mut grad = Pattern::RadialGradient(grad);
+    cr.set_source(&mut grad);
 }
 
-fn prepare_base<G>(
+fn prepare_base<T>(
+    node: &usvg::Node,
     g: &usvg::BaseGradient,
-    grad: &G,
+    grad: &T,
     opacity: usvg::Opacity,
     bbox: Rect,
-) where G: cairo::Gradient {
+) where
+    T: cairo::Gradient,
+{
     let spread_method = match g.spread_method {
         usvg::SpreadMethod::Pad => cairo::Extend::Pad,
         usvg::SpreadMethod::Reflect => cairo::Extend::Reflect,
