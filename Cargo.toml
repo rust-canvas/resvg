@@ -34,10 +34,10 @@ usvg = { git = "https://github.com/RazrFalcon/usvg", rev = "14342a5" }
 #usvg = { path = "../usvg" }
 unicode-segmentation = "1.2.1"
 # cairo backend
-cairo-rs = { version = "0.5", features = ["png"], optional = true }
-gdk-pixbuf = { version = "0.5", optional = true }
-pango = { version = "0.5", optional = true }
-pangocairo = { version = "0.6", optional = true }
+cairo-rs = { git = "https://github.com/gtk-rs/cairo", branch = "master", features = ["png"], optional = true }
+gdk-pixbuf = { git = "https://github.com/gtk-rs/gdk-pixbuf", optional = true }
+pango = { git = "https://github.com/gtk-rs/pango", optional = true }
+pangocairo = { git = "https://github.com/gtk-rs/pangocairo", optional = true }
 # qt backend
 #resvg-qt = { version = "0.3", optional = true }
 #resvg-qt = { path = "../resvg-qt", optional = true }
