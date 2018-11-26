@@ -11,12 +11,6 @@ repository = "https://github.com/RazrFalcon/resvg"
 readme = "README.md"
 categories = ["multimedia::images"]
 
-[workspace]
-members = [
-    "capi",
-    "tools/rendersvg",
-    "examples/cairo-rs",
-]
 exclude = [
     "examples/cairo-rs",
     "testing_tools",
